@@ -50,81 +50,50 @@
 </table>
 
 <script>
-let students = JSON.parse(localStorage.getItem("students")) || [];
-let filtered = [...students];
-
-function render(list) {
-    let html = "";
-    list.forEach((s, i) => {
-        html += `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${s.name}</td>
-            <td>${s.age}</td>
-            <td>${s.email}</td>
-            <td>
-                <button class="btn btn-warning btn-sm" onclick="edit(${i})">Sửa</button>
-                <button class="btn btn-danger btn-sm" onclick="del(${i})">Xóa</button>
-            </td>
-        </tr>`;
-    });
-    document.getElementById("data").innerHTML = html;
-}
-
-function save() {
-    const index = document.getElementById("index").value;
-    const student = {
-        name: name.value,
-        age: age.value,
-        email: email.value
-    };
-
-    if (!student.name || !student.age || !student.email) {
-        alert("Nhập đủ thông tin!");
-        return;
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    
+    function renderTable() {
+        const tbody = document.getElementById("studentTable");
+        tbody.innerHTML = "";
+        students.forEach((s, index) => {
+            tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${s.name}</td>
+                <td>${s.age}</td>
+                <td>${s.email}</td>
+                <td>
+                    <button onclick="deleteStudent(${index})">Xóa</button>
+                </td>
+            </tr>
+            `;
+        });
     }
-
-    if (index === "") {
-        students.push(student);
-    } else {
-        students[index] = student;
-    }
-
-    localStorage.setItem("students", JSON.stringify(students));
-    clearForm();
-    render(students);
-}
-
-function del(i) {
-    if (confirm("Xóa sinh viên này?")) {
-        students.splice(i, 1);
+    
+    function addStudent() {
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const email = document.getElementById("email").value;
+    
+        if (!name || !age || !email) {
+            alert("Vui lòng nhập đủ thông tin");
+            return;
+        }
+    
+        students.push({ name, age, email });
         localStorage.setItem("students", JSON.stringify(students));
-        render(students);
+        renderTable();
     }
-}
-
-function edit(i) {
-    index.value = i;
-    name.value = students[i].name;
-    age.value = students[i].age;
-    email.value = students[i].email;
-}
-
-function search() {
-    const key = search.value.toLowerCase();
-    filtered = students.filter(s => s.name.toLowerCase().includes(key));
-    render(filtered);
-}
-
-function clearForm() {
-    index.value = "";
-    name.value = "";
-    age.value = "";
-    email.value = "";
-}
-
-render(students);
-</script>
+    
+    function deleteStudent(index) {
+        students.splice(index, 1);
+        localStorage.setItem("students", JSON.stringify(students));
+        renderTable();
+    }
+    
+    renderTable();
+    </script>
+    
 
 </body>
 </html>
