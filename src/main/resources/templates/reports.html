@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Báo cáo hệ thống</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body{
+            background:#eef2f7;
+            font-family:Arial,sans-serif;
+        }
+
+        .sidebar{
+            min-height:100vh;
+            background:#111827;
+            color:white;
+            padding:25px;
+        }
+
+        .sidebar h3{
+            margin-bottom:40px;
+            font-weight:bold;
+            font-size:24px;
+        }
+
+        .sidebar a{
+            display:block;
+            text-decoration:none;
+            color:#d1d5db;
+            padding:12px;
+            border-radius:12px;
+            margin-bottom:10px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover{
+            background:#374151;
+            color:white;
+        }
+
+        .header{
+            background:linear-gradient(135deg,#4e73df,#224abe);
+            color:white;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-custom{
+            border:none;
+            border-radius:20px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-card{
+            color:white;
+            border-radius:20px;
+            padding:25px;
+            height:100%;
+        }
+
+        .bg1{
+            background:linear-gradient(135deg,#4e73df,#224abe);
+        }
+
+        .bg2{
+            background:linear-gradient(135deg,#1cc88a,#13855c);
+        }
+
+        .bg3{
+            background:linear-gradient(135deg,#f6c23e,#dda20a);
+        }
+
+        .bg4{
+            background:linear-gradient(135deg,#e74a3b,#be2617);
+        }
+
+        .number{
+            font-size:35px;
+            font-weight:bold;
+        }
+
+        .table{
+            border-radius:15px;
+            overflow:hidden;
+        }
+
+        .status-paid{
+            background:#198754;
+            color:white;
+            padding:5px 12px;
+            border-radius:20px;
+            font-size:13px;
+        }
+
+        .status-unpaid{
+            background:#dc3545;
+            color:white;
+            padding:5px 12px;
+            border-radius:20px;
+            font-size:13px;
+        }
+
+        .activity-item{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px 0;
+            border-bottom:1px solid #eee;
+        }
+
+        .footer{
+            text-align:center;
+            color:gray;
+            margin-top:30px;
+            padding:20px;
+        }
+
+        canvas{
+            max-height:300px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+
+        <div class="col-md-2 sidebar">
+
+            <h3>🎓 SYSTEM</h3>
+
+            <a href="/">🏠 Trang chủ</a>
+
+            <a href="/students">👨‍🎓 Sinh viên</a>
+
+            <a href="/tuition">💰 Học phí</a>
+
+            <a href="/dashboard">📊 Dashboard</a>
+
+            <a href="/reports">📑 Báo cáo</a>
+
+            <a href="/settings">⚙️ Cài đặt</a>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="col-md-10 p-4">
+
+            <!-- HEADER -->
+
+            <div class="header mb-4">
+
+                <h1>📑 BÁO CÁO HỆ THỐNG</h1>
+
+                <p class="mb-0">
+                    Tổng hợp dữ liệu sinh viên và học phí
+                </p>
+
+            </div>
+
+            <!-- STATS -->
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-3">
+
+                    <div class="stat-card bg1">
+
+                        <h5>Tổng sinh viên</h5>
+
+                        <div class="number"
+                             id="totalStudents">
+
+                            0
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card bg2">
+
+                        <h5>Đã thanh toán</h5>
+
+                        <div class="number"
+                             id="paidStudents">
+
+                            0
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card bg3">
+
+                        <h5>Chưa thanh toán</h5>
+
+                        <div class="number"
+                             id="unpaidStudents">
+
+                            0
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card bg4">
+
+                        <h5>Tổng doanh thu</h5>
+
+                        <div class="number"
+                             id="totalRevenue">
+
+                            0đ
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CHART -->
+
+            <div class="card card-custom p-4 mb-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <h4>
+                        📊 Biểu đồ học phí
+                    </h4>
+
+                    <button class="btn btn-success"
+                            onclick="downloadReport()">
+
+                        Xuất báo cáo
+
+                    </button>
+
+                </div>
+
+                <canvas id="myChart"></canvas>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="card card-custom p-4 mb-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <h4>
+                        📋 Danh sách sinh viên
+                    </h4>
+
+                    <button class="btn btn-primary"
+                            onclick="refreshData()">
+
+                        Làm mới
+
+                    </button>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover table-bordered">
+
+                        <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Họ tên</th>
+
+                            <th>Email</th>
+
+                            <th>Khoa</th>
+
+                            <th>Học phí</th>
+
+                            <th>Trạng thái</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="reportData">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- ACTIVITY -->
+
+            <div class="card card-custom p-4">
+
+                <h4 class="mb-4">
+                    🔔 Hoạt động gần đây
+                </h4>
+
+                <div id="activityBox">
+
+                </div>
+
+            </div>
+
+            <div class="footer">
+
+                © 2026 Student Management System
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    let students =
+        JSON.parse(localStorage.getItem("students")) || [];
+
+    let tuition =
+        JSON.parse(localStorage.getItem("tuition")) || [];
+
+    function renderStats(){
+
+        document.getElementById(
+            "totalStudents"
+        ).innerText = students.length;
+
+        const paid =
+            tuition.filter(t =>
+                t.status === "Đã thanh toán"
+            ).length;
+
+        const unpaid =
+            tuition.filter(t =>
+                t.status === "Chưa thanh toán"
+            ).length;
+
+        document.getElementById(
+            "paidStudents"
+        ).innerText = paid;
+
+        document.getElementById(
+            "unpaidStudents"
+        ).innerText = unpaid;
+
+        let total = 0;
+
+        tuition.forEach(t => {
+
+            total += Number(t.amount);
+        });
+
+        document.getElementById(
+            "totalRevenue"
+        ).innerText =
+            total.toLocaleString("vi-VN") + "đ";
+    }
+
+    function renderTable(){
+
+        let html = "";
+
+        students.forEach((s,i)=>{
+
+            const studentTuition =
+                tuition.find(t =>
+                    t.name === s.name
+                );
+
+            const amount =
+                studentTuition
+                ? Number(studentTuition.amount)
+                : 0;
+
+            const status =
+                studentTuition
+                ? studentTuition.status
+                : "Chưa thanh toán";
+
+            html += `
+
+            <tr>
+
+                <td>${i+1}</td>
+
+                <td>${s.name}</td>
+
+                <td>${s.email}</td>
+
+                <td>${s.department || "CNTT"}</td>
+
+                <td>
+
+                    ${amount.toLocaleString("vi-VN")}đ
+
+                </td>
+
+                <td>
+
+                    <span class="${
+                        status === "Đã thanh toán"
+                        ? "status-paid"
+                        : "status-unpaid"
+                    }">
+
+                        ${status}
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            `;
+        });
+
+        document.getElementById(
+            "reportData"
+        ).innerHTML = html;
+    }
+
+    function renderActivity(){
+
+        let html = "";
+
+        tuition.slice(-5).reverse().forEach(t=>{
+
+            html += `
+
+            <div class="activity-item">
+
+                <div>
+
+                    <b>${t.name}</b>
+
+                    <div class="text-muted">
+
+                        ${t.status}
+
+                    </div>
+
+                </div>
+
+                <div>
+
+                    ${Number(t.amount)
+                    .toLocaleString("vi-VN")}đ
+
+                </div>
+
+            </div>
+
+            `;
+        });
+
+        document.getElementById(
+            "activityBox"
+        ).innerHTML = html;
+    }
+
+    function refreshData(){
+
+        students =
+            JSON.parse(localStorage.getItem("students")) || [];
+
+        tuition =
+            JSON.parse(localStorage.getItem("tuition")) || [];
+
+        renderStats();
+
+        renderTable();
+
+        renderActivity();
+
+        loadChart();
+
+        alert("Đã cập nhật dữ liệu!");
+    }
+
+    function downloadReport(){
+
+        let text =
+`===== BÁO CÁO HỆ THỐNG =====
+
+Tổng sinh viên: ${students.length}
+
+Đã thanh toán:
+${tuition.filter(t =>
+t.status === "Đã thanh toán").length}
+
+Chưa thanh toán:
+${tuition.filter(t =>
+t.status === "Chưa thanh toán").length}
+`;
+
+        const blob =
+            new Blob([text],
+            {type:"text/plain"});
+
+        const a =
+            document.createElement("a");
+
+        a.href =
+            URL.createObjectURL(blob);
+
+        a.download =
+            "BaoCaoHeThong.txt";
+
+        a.click();
+    }
+
+    let chart;
+
+    function loadChart(){
+
+        const paid =
+            tuition.filter(t =>
+                t.status === "Đã thanh toán"
+            ).length;
+
+        const unpaid =
+            tuition.filter(t =>
+                t.status === "Chưa thanh toán"
+            ).length;
+
+        if(chart){
+
+            chart.destroy();
+        }
+
+        const ctx =
+            document.getElementById("myChart");
+
+        chart = new Chart(ctx, {
+
+            type:"bar",
+
+            data:{
+
+                labels:[
+                    "Đã thanh toán",
+                    "Chưa thanh toán"
+                ],
+
+                datasets:[{
+
+                    label:"Sinh viên",
+
+                    data:[paid, unpaid],
+
+                    backgroundColor:[
+                        "#198754",
+                        "#dc3545"
+                    ],
+
+                    borderRadius:12
+
+                }]
+            },
+
+            options:{
+
+                responsive:true,
+
+                plugins:{
+
+                    legend:{
+                        display:false
+                    }
+                }
+            }
+        });
+    }
+
+    renderStats();
+
+    renderTable();
+
+    renderActivity();
+
+    loadChart();
+
+</script>
+
+</body>
+
+</html>

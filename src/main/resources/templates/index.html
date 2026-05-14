@@ -13,318 +13,142 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-
     <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+        .sidebar h3{
+    margin-bottom:40px;
+    font-weight:bold;
+    font-size:26px;
+}
 
         body{
-            background:#f4f7fb;
+            background:#eef2f7;
             font-family:Arial,sans-serif;
-            overflow-x:hidden;
         }
-
-        /* SIDEBAR */
 
         .sidebar{
-
-            width:260px;
-
-            height:100vh;
-
-            position:fixed;
-
-            left:0;
-
-            top:0;
-
-            background:linear-gradient(180deg,#224abe,#4e73df);
-
-            padding:30px 20px;
-
+            min-height:100vh;
+            background:#111827;
             color:white;
-
-            box-shadow:5px 0 20px rgba(0,0,0,0.1);
+            padding:25px;
         }
 
-        .logo{
-
-            text-align:center;
-
+        .sidebar h3{
             margin-bottom:40px;
-        }
-
-        .logo h2{
-
             font-weight:bold;
         }
 
-        .menu a{
-
-            display:flex;
-
-            align-items:center;
-
-            gap:15px;
-
-            color:white;
-
+        .sidebar a{
+            display:block;
             text-decoration:none;
-
-            padding:15px;
-
-            border-radius:15px;
-
-            margin-bottom:15px;
-
+            color:#d1d5db;
+            padding:12px;
+            border-radius:12px;
+            margin-bottom:10px;
             transition:0.3s;
         }
 
-        .menu a:hover{
-
-            background:rgba(255,255,255,0.15);
-
-            transform:translateX(5px);
-        }
-
-        /* MAIN */
-
-        .main{
-
-            margin-left:260px;
-
-            padding:30px;
-        }
-
-        /* TOPBAR */
-
-        .topbar{
-
-            background:white;
-
-            border-radius:20px;
-
-            padding:20px 30px;
-
-            display:flex;
-
-            justify-content:space-between;
-
-            align-items:center;
-
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
-
-            margin-bottom:30px;
-        }
-
-        .profile{
-
-            display:flex;
-
-            align-items:center;
-
-            gap:15px;
-        }
-
-        .profile img{
-
-            width:50px;
-
-            height:50px;
-
-            border-radius:50%;
-        }
-
-        /* HERO */
-
-        .hero{
-
-            background:
-                linear-gradient(135deg,#4e73df,#224abe);
-
-            border-radius:25px;
-
-            padding:50px;
-
+        .sidebar a:hover{
+            background:#374151;
             color:white;
-
-            margin-bottom:35px;
-
-            position:relative;
-
-            overflow:hidden;
         }
 
-        .hero::before{
-
-            content:"";
-
-            width:300px;
-
-            height:300px;
-
-            background:rgba(255,255,255,0.1);
-
-            position:absolute;
-
-            right:-80px;
-
-            top:-80px;
-
-            border-radius:50%;
+        .header{
+            background:linear-gradient(135deg,#4e73df,#224abe);
+            color:white;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .hero h1{
-
-            font-size:45px;
-
-            font-weight:bold;
-
-            margin-bottom:15px;
+        .card-custom{
+            border:none;
+            border-radius:20px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
         }
-
-        .hero p{
-
-            font-size:18px;
-
-            opacity:0.9;
-        }
-
-        /* CARDS */
 
         .dashboard-card{
-
-            background:white;
-
-            border:none;
-
-            border-radius:25px;
-
-            padding:30px;
-
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
-
-            transition:0.3s;
-
-            height:100%;
-        }
-
-        .dashboard-card:hover{
-
-            transform:translateY(-5px);
-        }
-
-        .icon-box{
-
-            width:70px;
-
-            height:70px;
-
+            color:white;
             border-radius:20px;
-
-            display:flex;
-
-            justify-content:center;
-
-            align-items:center;
-
-            font-size:30px;
-
-            color:white;
-
-            margin-bottom:20px;
+            padding:25px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .bg-blue{
-            background:#4e73df;
+        .bg1{
+            background:linear-gradient(135deg,#4e73df,#224abe);
         }
 
-        .bg-green{
-            background:#1cc88a;
+        .bg2{
+            background:linear-gradient(135deg,#1cc88a,#13855c);
         }
 
-        .bg-orange{
-            background:#f6c23e;
+        .bg3{
+            background:linear-gradient(135deg,#f6c23e,#dda20a);
         }
 
-        .bg-red{
-            background:#e74a3b;
+        .bg4{
+            background:linear-gradient(135deg,#e74a3b,#be2617);
         }
 
-        .number{
-
-            font-size:35px;
-
-            font-weight:bold;
-
-            margin-bottom:10px;
-        }
-
-        /* TABLE */
-
-        .custom-table{
-
-            background:white;
-
-            border-radius:25px;
-
+        .table{
+            border-radius:15px;
             overflow:hidden;
-
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
-
-            margin-top:35px;
         }
 
-        .table thead{
-
-            background:#224abe;
-
-            color:white;
+        .chart-area{
+            height:300px;
+            display:flex;
+            justify-content:center;
+            align-items:end;
+            gap:25px;
+            padding:20px;
         }
 
-        /* ACTIVITY */
+        .bar{
+            width:70px;
+            border-radius:20px 20px 0 0;
+            background:linear-gradient(180deg,#4e73df,#224abe);
+            position:relative;
+        }
 
-        .activity{
-
-            background:white;
-
-            border-radius:25px;
-
-            padding:30px;
-
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
-
-            margin-top:35px;
+        .bar span{
+            position:absolute;
+            top:-30px;
+            left:50%;
+            transform:translateX(-50%);
+            font-weight:bold;
         }
 
         .activity-item{
-
             display:flex;
-
             justify-content:space-between;
-
             align-items:center;
-
             padding:15px 0;
-
             border-bottom:1px solid #eee;
         }
 
-        /* FOOTER */
-
         .footer{
-
             text-align:center;
+            color:gray;
+            margin-top:30px;
+            padding:20px;
+        }
 
-            padding:30px;
+        .avatar{
+            width:45px;
+            height:45px;
+            border-radius:50%;
+            background:#4e73df;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-weight:bold;
+        }
 
-            color:#777;
+        .student-box{
+            display:flex;
+            align-items:center;
+            gap:10px;
         }
 
     </style>
@@ -333,362 +157,494 @@
 
 <body>
 
-<!-- SIDEBAR -->
+<div class="container-fluid">
 
-<div class="sidebar">
+    <div class="row">
 
-    <div class="logo">
+        <!-- SIDEBAR -->
 
-        <h2>
-            🎓 SMS
-        </h2>
+        <div class="col-md-2 sidebar">
 
-        <p>
-            Student System
-        </p>
+            <h3>🎓 SYSTEM</h3>
 
-    </div>
+            <a href="/">🏠 Trang chủ</a>
 
-    <div class="menu">
+            <a href="/students">👨‍🎓 Sinh viên</a>
 
-        <a href="/">
+            <a href="/tuition">💰 Học phí</a>
 
-            <i class="fa-solid fa-house"></i>
+            <a href="/dashboard">📊 Dashboard</a>
 
-            <span>Trang chủ</span>
+            <a href="/reports">📑 Báo cáo</a>
 
-        </a>
+            <a href="/settings">⚙️ Cài đặt</a>
 
-        <a href="/students">
+        </div>
 
-            <i class="fa-solid fa-user-graduate"></i>
+        <!-- CONTENT -->
 
-            <span>Sinh viên</span>
+        <div class="col-md-10 p-4">
 
-        </a>
+            <!-- HEADER -->
 
-        <a href="/tuition">
+            <div class="header mb-4">
 
-            <i class="fa-solid fa-money-bill"></i>
+                <h1>🎓 STUDENT MANAGEMENT SYSTEM</h1>
 
-            <span>Học phí</span>
+                <p class="mb-0">
+                    Hệ thống quản lý sinh viên và học phí
+                </p>
 
-        </a>
+            </div>
 
-        <a href="/dashboard">
+            <!-- STATS -->
 
-            <i class="fa-solid fa-chart-line"></i>
+            <div class="row g-4 mb-4">
 
-            <span>Dashboard</span>
+                <div class="col-md-3">
 
-        </a>
+                    <div class="dashboard-card bg1">
+
+                        <h5>Tổng sinh viên</h5>
+
+                        <h2 id="totalStudents">
+                            0
+                        </h2>
+
+                        <p class="mb-0">
+                            Trong hệ thống
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="dashboard-card bg2">
+
+                        <h5>Đã đóng học phí</h5>
+
+                        <h2 id="paidCount">
+                            0
+                        </h2>
+
+                        <p class="mb-0">
+                            Hoàn thành thanh toán
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="dashboard-card bg3">
+
+                        <h5>Chưa đóng</h5>
+
+                        <h2 id="unpaidCount">
+                            0
+                        </h2>
+
+                        <p class="mb-0">
+                            Cần xử lý
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="dashboard-card bg4">
+
+                        <h5>Tổng học phí</h5>
+
+                        <h2 id="totalRevenue">
+                            0
+                        </h2>
+
+                        <p class="mb-0">
+                            Doanh thu hệ thống
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CHART + ACTIVITY -->
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-8">
+
+                    <div class="card card-custom p-4">
+
+                        <h4 class="mb-4">
+                            📈 Thống kê doanh thu
+                        </h4>
+
+                        <div class="chart-area">
+
+                            <div>
+
+                                <div class="bar"
+                                     style="height:120px;">
+
+                                    <span>120M</span>
+
+                                </div>
+
+                                <p class="text-center mt-2">
+                                    T1
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <div class="bar"
+                                     style="height:170px;">
+
+                                    <span>170M</span>
+
+                                </div>
+
+                                <p class="text-center mt-2">
+                                    T2
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <div class="bar"
+                                     style="height:220px;">
+
+                                    <span>220M</span>
+
+                                </div>
+
+                                <p class="text-center mt-2">
+                                    T3
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <div class="bar"
+                                     style="height:180px;">
+
+                                    <span>180M</span>
+
+                                </div>
+
+                                <p class="text-center mt-2">
+                                    T4
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card card-custom p-4">
+
+                        <h4 class="mb-4">
+                            🔔 Hoạt động gần đây
+                        </h4>
+
+                        <div id="activityBox">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="card card-custom p-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <h4>
+                        👨‍🎓 Sinh viên gần đây
+                    </h4>
+
+                    <a href="/students"
+                       class="btn btn-primary">
+
+                        Xem tất cả
+
+                    </a>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover table-bordered">
+
+                        <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Sinh viên</th>
+
+                            <th>Email</th>
+
+                            <th>Khoa</th>
+
+                            <th>Trạng thái</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="studentTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="footer">
+
+                © 2026 Student Management System
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- MAIN -->
+<script>
 
-<div class="main">
+    let students =
+        JSON.parse(localStorage.getItem("students")) || [];
 
-    <!-- TOPBAR -->
+    let tuition =
+        JSON.parse(localStorage.getItem("tuition")) || [];
 
-    <div class="topbar">
+    if(students.length === 0){
 
-        <div>
+        students = [
 
-            <h3>
-                Welcome Back 👋
-            </h3>
+            {
+                name:"Nguyễn Văn A",
+                age:20,
+                email:"vana@gmail.com",
+                department:"CNTT"
+            },
 
-            <p class="text-muted">
-                Student Management System
-            </p>
+            {
+                name:"Trần Thị B",
+                age:21,
+                email:"thib@gmail.com",
+                department:"Marketing"
+            },
 
-        </div>
+            {
+                name:"Lê Văn C",
+                age:22,
+                email:"vanc@gmail.com",
+                department:"Kế toán"
+            }
 
-        <div class="profile">
+        ];
 
-            <img src="https://i.pravatar.cc/100">
+        localStorage.setItem(
+            "students",
+            JSON.stringify(students)
+        );
+    }
 
-            <div>
+    if(tuition.length === 0){
 
-                <b>Administrator</b>
+        tuition = [
 
-                <div class="text-muted">
-                    Online
-                </div>
+            {
+                name:"Nguyễn Văn A",
+                amount:5000000,
+                status:"Đã thanh toán"
+            },
+
+            {
+                name:"Trần Thị B",
+                amount:4500000,
+                status:"Chưa thanh toán"
+            },
+
+            {
+                name:"Lê Văn C",
+                amount:6000000,
+                status:"Đã thanh toán"
+            }
+
+        ];
+
+        localStorage.setItem(
+            "tuition",
+            JSON.stringify(tuition)
+        );
+    }
+
+    function renderStats(){
+
+        document.getElementById(
+            "totalStudents"
+        ).innerText = students.length;
+
+        const paid =
+            tuition.filter(t =>
+                t.status === "Đã thanh toán"
+            ).length;
+
+        const unpaid =
+            tuition.filter(t =>
+                t.status === "Chưa thanh toán"
+            ).length;
+
+        let total = 0;
+
+        tuition.forEach(t => {
+
+            total += Number(t.amount);
+        });
+
+        document.getElementById(
+            "paidCount"
+        ).innerText = paid;
+
+        document.getElementById(
+            "unpaidCount"
+        ).innerText = unpaid;
+
+        document.getElementById(
+            "totalRevenue"
+        ).innerText =
+            (total/1000000).toFixed(0) + "M";
+    }
+
+    function renderStudents(){
+
+        let html = "";
+
+        students.forEach((s,i)=>{
+
+            html += `
+
+            <tr>
+
+                <td>${i+1}</td>
+
+                <td>
+
+                    <div class="student-box">
+
+                        <div class="avatar">
+
+                            ${s.name.charAt(0)}
+
+                        </div>
+
+                        <div>
+
+                            <b>${s.name}</b>
+
+                            <div class="text-muted">
+
+                                SV00${i+1}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td>${s.email}</td>
+
+                <td>${s.department || "CNTT"}</td>
+
+                <td>
+
+                    <span class="badge bg-success">
+
+                        Hoạt động
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            `;
+        });
+
+        document.getElementById(
+            "studentTable"
+        ).innerHTML = html;
+    }
+
+    function renderActivity(){
+
+        let html = "";
+
+        students.slice(0,4).forEach((s,i)=>{
+
+            html += `
+
+            <div class="activity-item">
+
+                <span>
+
+                    ${s.name} vừa cập nhật thông tin
+
+                </span>
+
+                <span class="text-muted">
+
+                    ${i+1} phút trước
+
+                </span>
 
             </div>
 
-        </div>
+            `;
+        });
 
-    </div>
+        document.getElementById(
+            "activityBox"
+        ).innerHTML = html;
+    }
 
-    <!-- HERO -->
+    renderStats();
 
-    <div class="hero">
+    renderStudents();
 
-        <h1>
-            Student Management Dashboard
-        </h1>
+    renderActivity();
 
-        <p>
-            Hệ thống quản lý sinh viên,
-            học phí và tài chính hiện đại.
-        </p>
-
-        <button class="btn btn-light btn-lg mt-3">
-
-            Get Started
-
-        </button>
-
-    </div>
-
-    <!-- STATS -->
-
-    <div class="row g-4">
-
-        <div class="col-md-3">
-
-            <div class="dashboard-card">
-
-                <div class="icon-box bg-blue">
-
-                    <i class="fa-solid fa-users"></i>
-
-                </div>
-
-                <div class="number">
-                    120
-                </div>
-
-                <h5>Tổng sinh viên</h5>
-
-                <p class="text-muted">
-                    Số lượng sinh viên hiện tại
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-3">
-
-            <div class="dashboard-card">
-
-                <div class="icon-box bg-green">
-
-                    <i class="fa-solid fa-money-bill-wave"></i>
-
-                </div>
-
-                <div class="number">
-                    250M
-                </div>
-
-                <h5>Doanh thu</h5>
-
-                <p class="text-muted">
-                    Tổng học phí đã thu
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-3">
-
-            <div class="dashboard-card">
-
-                <div class="icon-box bg-orange">
-
-                    <i class="fa-solid fa-book"></i>
-
-                </div>
-
-                <div class="number">
-                    35
-                </div>
-
-                <h5>Môn học</h5>
-
-                <p class="text-muted">
-                    Danh sách môn học
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-3">
-
-            <div class="dashboard-card">
-
-                <div class="icon-box bg-red">
-
-                    <i class="fa-solid fa-chart-simple"></i>
-
-                </div>
-
-                <div class="number">
-                    98%
-                </div>
-
-                <h5>Hiệu suất</h5>
-
-                <p class="text-muted">
-                    Hiệu suất hệ thống
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- TABLE -->
-
-    <div class="custom-table">
-
-        <div class="p-4">
-
-            <h4 class="mb-4">
-                👨‍🎓 Danh sách sinh viên mới
-            </h4>
-
-            <table class="table table-hover">
-
-                <thead>
-
-                <tr>
-
-                    <th>ID</th>
-
-                    <th>Họ tên</th>
-
-                    <th>Email</th>
-
-                    <th>Trạng thái</th>
-
-                </tr>
-
-                </thead>
-
-                <tbody>
-
-                <tr>
-
-                    <td>SV001</td>
-
-                    <td>Nguyễn Văn A</td>
-
-                    <td>a@gmail.com</td>
-
-                    <td>
-                        <span class="badge bg-success">
-                            Active
-                        </span>
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td>SV002</td>
-
-                    <td>Trần Thị B</td>
-
-                    <td>b@gmail.com</td>
-
-                    <td>
-                        <span class="badge bg-warning">
-                            Pending
-                        </span>
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td>SV003</td>
-
-                    <td>Lê Văn C</td>
-
-                    <td>c@gmail.com</td>
-
-                    <td>
-                        <span class="badge bg-primary">
-                            Completed
-                        </span>
-                    </td>
-
-                </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-    <!-- ACTIVITY -->
-
-    <div class="activity">
-
-        <h4 class="mb-4">
-            📌 Hoạt động gần đây
-        </h4>
-
-        <div class="activity-item">
-
-            <span>
-                Nguyễn Văn A vừa đóng học phí
-            </span>
-
-            <span class="text-muted">
-                2 phút trước
-            </span>
-
-        </div>
-
-        <div class="activity-item">
-
-            <span>
-                Thêm sinh viên mới
-            </span>
-
-            <span class="text-muted">
-                10 phút trước
-            </span>
-
-        </div>
-
-        <div class="activity-item">
-
-            <span>
-                Hệ thống cập nhật dữ liệu
-            </span>
-
-            <span class="text-muted">
-                1 giờ trước
-            </span>
-
-        </div>
-
-    </div>
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-
-        © 2026 Student Management System
-
-    </div>
-
-</div>
+</script>
 
 </body>
 

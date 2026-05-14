@@ -6,7 +6,11 @@
     <meta charset="UTF-8">
     <title>Quản lý sinh viên</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- XLSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
 
@@ -91,14 +95,6 @@
             font-size:13px;
         }
 
-        .status-lock{
-            background:#dc3545;
-            color:white;
-            padding:5px 12px;
-            border-radius:20px;
-            font-size:13px;
-        }
-
         .dashboard-card{
             color:white;
             border-radius:20px;
@@ -153,9 +149,9 @@
 
             <a href="/dashboard">📊 Dashboard</a>
 
-            <a href="#">📑 Báo cáo</a>
+            <a href="/reports">📑 Báo cáo</a>
 
-            <a href="#">⚙️ Cài đặt</a>
+            <a href="/settings">⚙️ Cài đặt</a>
 
         </div>
 
@@ -185,7 +181,7 @@
 
                         <h5>Tổng sinh viên</h5>
 
-                        <h2>125</h2>
+                        <h2 id="totalStudents">0</h2>
 
                         <p class="mb-0">
                             Đang hoạt động
@@ -201,10 +197,10 @@
 
                         <h5>Sinh viên mới</h5>
 
-                        <h2>18</h2>
+                        <h2 id="newStudents">0</h2>
 
                         <p class="mb-0">
-                            Trong tháng này
+                            Trong hôm nay
                         </p>
 
                     </div>
@@ -215,12 +211,12 @@
 
                     <div class="dashboard-card bg3">
 
-                        <h5>Lớp học</h5>
+                        <h5>Khoa</h5>
 
-                        <h2>12</h2>
+                        <h2>3</h2>
 
                         <p class="mb-0">
-                            Đang quản lý
+                            CNTT - Kế toán - Marketing
                         </p>
 
                     </div>
@@ -231,12 +227,12 @@
 
                     <div class="dashboard-card bg4">
 
-                        <h5>Tài khoản khóa</h5>
+                        <h5>Email hợp lệ</h5>
 
-                        <h2>3</h2>
+                        <h2 id="validEmails">0</h2>
 
                         <p class="mb-0">
-                            Cần xử lý
+                            Sinh viên có email
                         </p>
 
                     </div>
@@ -284,13 +280,20 @@
 
                     <div class="col-md-2">
 
-                        <select class="form-select">
+                        <select id="major"
+                                class="form-select">
 
-                            <option>CNTT</option>
+                            <option value="CNTT">
+                                CNTT
+                            </option>
 
-                            <option>Kế toán</option>
+                            <option value="Kế toán">
+                                Kế toán
+                            </option>
 
-                            <option>Marketing</option>
+                            <option value="Marketing">
+                                Marketing
+                            </option>
 
                         </select>
 
@@ -350,8 +353,11 @@
                         📋 Danh sách sinh viên
                     </h4>
 
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary"
+                            onclick="exportExcel()">
+
                         Xuất Excel
+
                     </button>
 
                 </div>
@@ -400,23 +406,8 @@
                     🔔 Hoạt động gần đây
                 </h4>
 
-                <ul class="list-group">
-
-                    <li class="list-group-item">
-                        Nguyễn Văn A vừa được thêm vào hệ thống
-                    </li>
-
-                    <li class="list-group-item">
-                        Trần Thị B cập nhật email
-                    </li>
-
-                    <li class="list-group-item">
-                        Lê Văn C bị khóa tài khoản
-                    </li>
-
-                    <li class="list-group-item">
-                        Hệ thống đồng bộ dữ liệu sinh viên
-                    </li>
+                <ul class="list-group"
+                    id="activityList">
 
                 </ul>
 
@@ -436,8 +427,55 @@
 
 <script>
 
+    // =========================
+    // DỮ LIỆU MẶC ĐỊNH
+    // =========================
+
+    if(!localStorage.getItem("students")){
+
+        const demoStudents = [
+
+            {
+                name:"Nguyễn Văn An",
+                age:20,
+                email:"an@gmail.com",
+                major:"CNTT"
+            },
+
+            {
+                name:"Trần Thị Bình",
+                age:21,
+                email:"binh@gmail.com",
+                major:"Kế toán"
+            },
+
+            {
+                name:"Lê Hoàng Nam",
+                age:19,
+                email:"nam@gmail.com",
+                major:"Marketing"
+            }
+
+        ];
+
+        localStorage.setItem(
+            "students",
+            JSON.stringify(demoStudents)
+        );
+    }
+
+    // =========================
+    // LOAD DATA
+    // =========================
+
     let students =
-        JSON.parse(localStorage.getItem("students")) || [];
+        JSON.parse(
+            localStorage.getItem("students")
+        ) || [];
+
+    // =========================
+    // RENDER TABLE
+    // =========================
 
     function render(list){
 
@@ -477,7 +515,7 @@
 
                 <td>${s.email}</td>
 
-                <td>CNTT</td>
+                <td>${s.major}</td>
 
                 <td>
 
@@ -511,7 +549,15 @@
         });
 
         document.getElementById("data").innerHTML = html;
+
+        updateDashboard();
+
+        renderActivity();
     }
+
+    // =========================
+    // SAVE
+    // =========================
 
     function save(){
 
@@ -527,7 +573,10 @@
                 document.getElementById("age").value,
 
             email:
-                document.getElementById("email").value
+                document.getElementById("email").value,
+
+            major:
+                document.getElementById("major").value
         };
 
         if(!student.name ||
@@ -542,9 +591,13 @@
 
             students.push(student);
 
+            alert("Đã thêm sinh viên!");
+
         }else{
 
             students[index] = student;
+
+            alert("Đã cập nhật sinh viên!");
         }
 
         localStorage.setItem(
@@ -556,6 +609,10 @@
 
         render(students);
     }
+
+    // =========================
+    // DELETE
+    // =========================
 
     function del(i){
 
@@ -569,8 +626,14 @@
             );
 
             render(students);
+
+            alert("Đã xóa!");
         }
     }
+
+    // =========================
+    // EDIT
+    // =========================
 
     function edit(i){
 
@@ -584,7 +647,14 @@
 
         document.getElementById("email").value =
             students[i].email;
+
+        document.getElementById("major").value =
+            students[i].major;
     }
+
+    // =========================
+    // SEARCH
+    // =========================
 
     function searchStudent(){
 
@@ -594,11 +664,24 @@
 
         const filtered =
             students.filter(s =>
+
                 s.name.toLowerCase().includes(key)
+
+                ||
+
+                s.email.toLowerCase().includes(key)
+
+                ||
+
+                s.major.toLowerCase().includes(key)
             );
 
         render(filtered);
     }
+
+    // =========================
+    // CLEAR FORM
+    // =========================
 
     function clearForm(){
 
@@ -609,7 +692,102 @@
         document.getElementById("age").value = "";
 
         document.getElementById("email").value = "";
+
+        document.getElementById("major").value = "CNTT";
     }
+
+    // =========================
+    // DASHBOARD
+    // =========================
+
+    function updateDashboard(){
+
+        document.getElementById(
+            "totalStudents"
+        ).innerText = students.length;
+
+        document.getElementById(
+            "newStudents"
+        ).innerText = students.length;
+
+        document.getElementById(
+            "validEmails"
+        ).innerText = students.length;
+    }
+
+    // =========================
+    // ACTIVITY
+    // =========================
+
+    function renderActivity(){
+
+        let html = "";
+
+        students.slice(-4).reverse().forEach(s=>{
+
+            html += `
+
+            <li class="list-group-item">
+
+                👨‍🎓 ${s.name}
+                (${s.major})
+
+            </li>
+
+            `;
+        });
+
+        document.getElementById(
+            "activityList"
+        ).innerHTML = html;
+    }
+
+    // =========================
+    // EXPORT EXCEL
+    // =========================
+
+    function exportExcel(){
+
+        if(students.length === 0){
+
+            alert("Không có dữ liệu!");
+            return;
+        }
+
+        const data = students.map((s,i)=>({
+
+            STT:i+1,
+
+            "Họ tên":s.name,
+
+            "Tuổi":s.age,
+
+            Email:s.email,
+
+            Khoa:s.major
+        }));
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(data);
+
+        const workbook =
+            XLSX.utils.book_new();
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "SinhVien"
+        );
+
+        XLSX.writeFile(
+            workbook,
+            "DanhSachSinhVien.xlsx"
+        );
+    }
+
+    // =========================
+    // FIRST RENDER
+    // =========================
 
     render(students);
 

@@ -25,4 +25,15 @@ public class HomeController {
     public String dashboard() {
         return "dashboard";
     }
+
+    @GetMapping("/reports")
+    public String reports() {
+        return "reports";
+    }
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
+
 }

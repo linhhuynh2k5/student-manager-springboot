@@ -1,0 +1,601 @@
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cài đặt hệ thống</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:#eef2f7;
+            font-family:Arial,sans-serif;
+        }
+
+        .sidebar{
+            min-height:100vh;
+            background:#111827;
+            color:white;
+            padding:25px;
+        }
+
+        .sidebar h3{
+            margin-bottom:40px;
+            font-weight:bold;
+        }
+
+        .sidebar a{
+            display:block;
+            text-decoration:none;
+            color:#d1d5db;
+            padding:14px;
+            border-radius:12px;
+            margin-bottom:12px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover{
+            background:#374151;
+            color:white;
+            transform:translateX(4px);
+        }
+
+        .header{
+            background:linear-gradient(135deg,#0f172a,#1e293b);
+            color:white;
+            padding:35px;
+            border-radius:25px;
+            margin-bottom:30px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1{
+            font-weight:bold;
+        }
+
+        .card-custom{
+            border:none;
+            border-radius:22px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .setting-box{
+            padding:25px;
+        }
+
+        .setting-title{
+            font-size:20px;
+            font-weight:bold;
+            margin-bottom:20px;
+            color:#1e293b;
+        }
+
+        .profile-avatar{
+            width:120px;
+            height:120px;
+            border-radius:50%;
+            object-fit:cover;
+            border:5px solid #4e73df;
+        }
+
+        .theme-box{
+            width:100%;
+            height:70px;
+            border-radius:18px;
+            cursor:pointer;
+            transition:0.3s;
+            border:4px solid transparent;
+        }
+
+        .theme-box:hover{
+            transform:scale(1.03);
+        }
+
+        .theme-active{
+            border:4px solid #111827;
+        }
+
+        .theme-blue{
+            background:linear-gradient(135deg,#4e73df,#224abe);
+        }
+
+        .theme-green{
+            background:linear-gradient(135deg,#1cc88a,#13855c);
+        }
+
+        .theme-orange{
+            background:linear-gradient(135deg,#f59e0b,#d97706);
+        }
+
+        .theme-dark{
+            background:linear-gradient(135deg,#111827,#1f2937);
+        }
+
+        .btn-save{
+            border:none;
+            background:#4e73df;
+            color:white;
+            padding:12px 25px;
+            border-radius:14px;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn-save:hover{
+            background:#224abe;
+        }
+
+        .switch{
+            width:55px;
+            height:28px;
+            background:#ccc;
+            border-radius:30px;
+            position:relative;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .switch::before{
+            content:"";
+            width:22px;
+            height:22px;
+            background:white;
+            border-radius:50%;
+            position:absolute;
+            top:3px;
+            left:3px;
+            transition:0.3s;
+        }
+
+        .switch.active{
+            background:#198754;
+        }
+
+        .switch.active::before{
+            left:30px;
+        }
+
+        .footer{
+            text-align:center;
+            padding:25px;
+            color:gray;
+        }
+
+        .preview-box{
+            height:180px;
+            border-radius:20px;
+            padding:25px;
+            color:white;
+            transition:0.3s;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+
+        <div class="col-md-2 sidebar">
+
+            <h3>🎓 SYSTEM</h3>
+
+            <a href="/">🏠 Trang chủ</a>
+
+            <a href="/students">👨‍🎓 Sinh viên</a>
+
+            <a href="/tuition">💰 Học phí</a>
+
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/reports">📑 Báo cáo</a>
+            <a href="/settings">⚙️ Cài đặt</a>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="col-md-10 p-4">
+
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <h1>
+                    ⚙️ CÀI ĐẶT HỆ THỐNG
+                </h1>
+
+                <p class="mb-0">
+                    Quản lý giao diện và thông tin quản trị
+                </p>
+
+            </div>
+
+            <!-- PROFILE -->
+
+            <div class="card card-custom setting-box mb-4">
+
+                <div class="setting-title">
+                    👤 Hồ sơ quản trị
+                </div>
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-3 text-center">
+
+                        <img src="https://i.pravatar.cc/300"
+                             class="profile-avatar"
+                             id="avatar">
+
+                        <button class="btn btn-primary mt-3"
+                                onclick="changeAvatar()">
+
+                            Đổi avatar
+
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label>
+                                    Tên quản trị
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="adminName"
+                                       value="Administrator">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label>Email</label>
+
+                                <input type="email"
+                                       class="form-control"
+                                       id="adminEmail"
+                                       value="admin@gmail.com">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label>Số điện thoại</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       value="0123456789">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label>Mật khẩu</label>
+
+                                <input type="password"
+                                       class="form-control"
+                                       value="123456">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- THEME -->
+
+            <div class="card card-custom setting-box mb-4">
+
+                <div class="setting-title">
+                    🎨 Tùy chỉnh giao diện
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-md-3">
+
+                        <div class="theme-box theme-blue theme-active"
+                             onclick="changeTheme('blue',this)">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="theme-box theme-green"
+                             onclick="changeTheme('green',this)">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="theme-box theme-orange"
+                             onclick="changeTheme('orange',this)">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="theme-box theme-dark"
+                             onclick="changeTheme('dark',this)">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PREVIEW -->
+
+            <div class="card card-custom setting-box mb-4">
+
+                <div class="setting-title">
+                    🖥️ Xem trước giao diện
+                </div>
+
+                <div class="preview-box"
+                     id="previewBox"
+                     style="background:linear-gradient(135deg,#4e73df,#224abe)">
+
+                    <h2>
+                        Student Management System
+                    </h2>
+
+                    <p>
+                        Đây là giao diện xem trước của hệ thống
+                    </p>
+
+                    <button class="btn btn-light">
+                        Demo Button
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- SYSTEM SETTINGS -->
+
+            <div class="card card-custom setting-box mb-4">
+
+                <div class="setting-title">
+                    🔧 Cài đặt hệ thống
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h5>
+                            Thông báo hệ thống
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Bật/tắt thông báo
+                        </p>
+
+                    </div>
+
+                    <div class="switch active"
+                         onclick="toggleSwitch(this)">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h5>
+                            Chế độ bảo trì
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Khóa truy cập hệ thống
+                        </p>
+
+                    </div>
+
+                    <div class="switch"
+                         onclick="toggleSwitch(this)">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h5>
+                            Tự động backup
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Sao lưu dữ liệu định kỳ
+                        </p>
+
+                    </div>
+
+                    <div class="switch active"
+                         onclick="toggleSwitch(this)">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SAVE -->
+
+            <div class="card card-custom setting-box mb-4 text-center">
+
+                <button class="btn-save"
+                        onclick="saveSettings()">
+
+                    💾 Lưu cài đặt
+
+                </button>
+
+            </div>
+
+            <div class="footer">
+
+                © 2026 Student Management System
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function changeAvatar(){
+
+        const random =
+            Math.floor(Math.random() * 1000);
+
+        document.getElementById("avatar")
+            .src =
+            `https://i.pravatar.cc/300?img=${random}`;
+
+        alert("Đã đổi avatar!");
+    }
+
+    function toggleSwitch(el){
+
+        el.classList.toggle("active");
+    }
+
+    function changeTheme(type,el){
+
+        document.querySelectorAll(".theme-box")
+            .forEach(box=>{
+
+                box.classList.remove("theme-active");
+            });
+
+        el.classList.add("theme-active");
+
+        const preview =
+            document.getElementById("previewBox");
+
+        if(type === "blue"){
+
+            preview.style.background =
+                "linear-gradient(135deg,#4e73df,#224abe)";
+        }
+
+        if(type === "green"){
+
+            preview.style.background =
+                "linear-gradient(135deg,#1cc88a,#13855c)";
+        }
+
+        if(type === "orange"){
+
+            preview.style.background =
+                "linear-gradient(135deg,#f59e0b,#d97706)";
+        }
+
+        if(type === "dark"){
+
+            preview.style.background =
+                "linear-gradient(135deg,#111827,#1f2937)";
+        }
+
+        localStorage.setItem(
+            "theme",
+            type
+        );
+    }
+
+    function saveSettings(){
+
+        const name =
+            document.getElementById("adminName").value;
+
+        const email =
+            document.getElementById("adminEmail").value;
+
+        const settings = {
+
+            name:name,
+
+            email:email,
+
+            theme:
+                localStorage.getItem("theme")
+        };
+
+        localStorage.setItem(
+            "settings",
+            JSON.stringify(settings)
+        );
+
+        alert("Lưu cài đặt thành công!");
+    }
+
+    function loadSettings(){
+
+        const settings =
+            JSON.parse(
+                localStorage.getItem("settings")
+            );
+
+        if(settings){
+
+            document.getElementById("adminName")
+                .value = settings.name;
+
+            document.getElementById("adminEmail")
+                .value = settings.email;
+        }
+    }
+
+    loadSettings();
+
+</script>
+
+</body>
+
+</html>
